@@ -1,0 +1,49 @@
+# This is a Databricks asset bundle definition for classic_serverless_benchmarking.
+# See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
+bundle:
+  name: classic_serverless_benchmarking
+  uuid: c6750bee-35be-4e47-9714-d3ff2bcc938d
+
+include:
+  - resources/*.yml
+
+###################################
+# Variables name  
+# - Custom variables for the bundle
+###################################
+variables:
+# Setting the variables for catalog and schema
+  catalog_name:
+    description: Catalog for the project.
+    default: steventan
+    
+  schema_name:
+    description: Schema for the project.
+    default: tpcds_sf100_delta
+
+  scaleFactors:
+    description: Scale factors for TPC-DS benchmark.
+    default: 100
+ 
+  overwrite:
+    description: Scale factors for TPC-DS benchmark.
+    default: true
+
+
+
+targets:
+  dev:
+    # The default target uses 'mode: development' to create a development copy.
+    # - Deployed resources get prefixed with '[dev my_user_name]'
+    # - Any job schedules and triggers are paused by default.
+    # See also https://docs.databricks.com/dev-tools/bundles/deployment-modes.html.
+    mode: development
+    default: true
+    workspace:
+      host: https://adb-984752964297111.11.azuredatabricks.net
+
+  prod:
+    mode: production
+    workspace:
+      host: https://adb-984752964297111.11.azuredatabricks.net
+      root_path: /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}

@@ -1,0 +1,96 @@
+resources:
+  jobs:
+    Benchmark_Classic_NoPhoton_OnDemand:
+      name: Benchmark_Classic_NoPhoton_OnDemand
+      schedule:
+        quartz_cron_expression: 6 0 0/2 * * ?
+        timezone_id: UTC
+        pause_status: UNPAUSED
+      tasks:
+        - task_key: tpcds_queries_01_05
+          notebook_task:
+            notebook_path: ../src/tpcds_queries_01_05_with_setup.ipynb
+            source: WORKSPACE
+          job_cluster_key: Benchmark_Classic_NoPhoton_OnDemand_Parallel
+        - task_key: tpcds_queries_06_10
+          notebook_task:
+            notebook_path: ../src/tpcds_queries_06_10_with_setup.ipynb
+            source: WORKSPACE
+          job_cluster_key: Benchmark_Classic_NoPhoton_OnDemand_Parallel
+        - task_key: tpcds_queries_11_15
+          notebook_task:
+            notebook_path: ../src/tpcds_queries_11_15_with_setup.ipynb
+            source: WORKSPACE
+          job_cluster_key: Benchmark_Classic_NoPhoton_OnDemand_Parallel
+        - task_key: tpcds_queries_16_20
+          notebook_task:
+            notebook_path: ../src/tpcds_queries_16_20_with_setup.ipynb
+            source: WORKSPACE
+          job_cluster_key: Benchmark_Classic_NoPhoton_OnDemand_Parallel
+        - task_key: tpcds_queries_21_25
+          notebook_task:
+            notebook_path: ../src/tpcds_queries_21_25_with_setup.ipynb
+            source: WORKSPACE
+          job_cluster_key: Benchmark_Classic_NoPhoton_OnDemand_Parallel
+        - task_key: tpcds_queries_26_30
+          notebook_task:
+            notebook_path: ../src/tpcds_queries_26_30_with_setup.ipynb
+            source: WORKSPACE
+          job_cluster_key: Benchmark_Classic_NoPhoton_OnDemand_Parallel
+        - task_key: tpcds_queries_31_35
+          notebook_task:
+            notebook_path: ../src/tpcds_queries_31_35_with_setup.ipynb
+            source: WORKSPACE
+          job_cluster_key: Benchmark_Classic_NoPhoton_OnDemand_Parallel
+        - task_key: tpcds_queries_36_40
+          notebook_task:
+            notebook_path: ../src/tpcds_queries_36_40_with_setup.ipynb
+            source: WORKSPACE
+          job_cluster_key: Benchmark_Classic_NoPhoton_OnDemand_Parallel
+        - task_key: tpcds_queries_41_45
+          notebook_task:
+            notebook_path: ../src/tpcds_queries_41_45_with_setup.ipynb
+            source: WORKSPACE
+          job_cluster_key: Benchmark_Classic_NoPhoton_OnDemand_Parallel
+        - task_key: tpcds_queries_46_50
+          notebook_task:
+            notebook_path: ../src/tpcds_queries_46_50_with_setup.ipynb
+            source: WORKSPACE
+          job_cluster_key: Benchmark_Classic_NoPhoton_OnDemand_Parallel
+      job_clusters:
+        - job_cluster_key: Benchmark_Classic_NoPhoton_OnDemand_Parallel
+          new_cluster:
+            cluster_name: ""
+            spark_version: 15.4.x-scala2.12
+            azure_attributes:
+              availability: ON_DEMAND_AZURE
+            node_type_id: Standard_E4as_v4
+            driver_node_type_id: Standard_E4as_v4
+            spark_env_vars:
+              PYSPARK_PYTHON: /databricks/python3/bin/python3
+            data_security_mode: DATA_SECURITY_MODE_DEDICATED
+            runtime_engine: STANDARD
+            kind: CLASSIC_PREVIEW
+            is_single_node: false
+            autoscale:
+              min_workers: 2
+              max_workers: 8
+      tags:
+        benchmark: "tpc-ds-100"
+        ondemand: yes
+        photon: no
+        serverless: no
+      queue:
+        enabled: true
+      parameters:
+        - name: catalog_name
+          default: ${var.catalog_name}
+        - name: schema_name
+          default: ${var.schema_name}
+      environments:
+        - environment_key: Default
+          spec:
+            client: "2"
+      performance_target: PERFORMANCE_OPTIMIZED
+
+

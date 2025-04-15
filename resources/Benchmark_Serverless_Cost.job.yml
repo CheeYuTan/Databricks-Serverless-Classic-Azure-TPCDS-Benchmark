@@ -1,0 +1,75 @@
+resources:
+  jobs:
+    Benchmark_Serverless_Cost:
+      name: Benchmark_Serverless_Cost
+      schedule:
+        quartz_cron_expression: 6 0 0/2 * * ?
+        timezone_id: UTC
+        pause_status: UNPAUSED
+      tasks:
+        - task_key: tpcds_queries_01_05
+          notebook_task:
+            notebook_path: ../src/tpcds_queries_01_05_with_setup.ipynb
+            source: WORKSPACE
+          environment_key: Default
+        - task_key: tpcds_queries_06_10
+          notebook_task:
+            notebook_path: ../src/tpcds_queries_06_10_with_setup.ipynb
+            source: WORKSPACE
+          environment_key: Default
+        - task_key: tpcds_queries_11_15
+          notebook_task:
+            notebook_path: ../src/tpcds_queries_11_15_with_setup.ipynb
+            source: WORKSPACE
+          environment_key: Default
+        - task_key: tpcds_queries_16_20
+          notebook_task:
+            notebook_path: ../src/tpcds_queries_16_20_with_setup.ipynb
+            source: WORKSPACE
+          environment_key: Default
+        - task_key: tpcds_queries_21_25
+          notebook_task:
+            notebook_path: ../src/tpcds_queries_21_25_with_setup.ipynb
+            source: WORKSPACE
+          environment_key: Default
+        - task_key: tpcds_queries_26_30
+          notebook_task:
+            notebook_path: ../src/tpcds_queries_26_30_with_setup.ipynb
+            source: WORKSPACE
+          environment_key: Default
+        - task_key: tpcds_queries_31_35
+          notebook_task:
+            notebook_path: ../src/tpcds_queries_31_35_with_setup.ipynb
+            source: WORKSPACE
+          environment_key: Default
+        - task_key: tpcds_queries_36_40
+          notebook_task:
+            notebook_path: ../src/tpcds_queries_36_40_with_setup.ipynb
+            source: WORKSPACE
+          environment_key: Default
+        - task_key: tpcds_queries_41_45
+          notebook_task:
+            notebook_path: ../src/tpcds_queries_41_45_with_setup.ipynb
+            source: WORKSPACE
+          environment_key: Default
+        - task_key: tpcds_queries_46_50
+          notebook_task:
+            notebook_path: ../src/tpcds_queries_46_50_with_setup.ipynb
+            source: WORKSPACE
+          environment_key: Default
+      tags:
+        benchmark: ""
+        performance: no
+        serverless: yes
+      queue:
+        enabled: true
+      parameters:
+        - name: catalog_name
+          default: ${var.catalog_name}
+        - name: schema_name
+          default: ${var.schema_name}
+      environments:
+        - environment_key: Default
+          spec:
+            client: "2"
+      performance_target: COST_OPTIMIZED
